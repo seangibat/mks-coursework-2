@@ -1,0 +1,12 @@
+<%= form_tag("/videos", method: "post") do %>
+  <%= label_tag('video[title]', "Title:") %>
+  <%= text_field_tag('video[title]') %><br>
+
+  <%= label_tag('video[description]', "Description:") %>
+  <%= text_field_tag('video[description]') %><br>
+
+  <%= label_tag('video[youtube_id]', "Youtube ID:") %>
+  <%= text_field_tag('video[youtube_id]') %><br>
+
+  <%= submit_tag("submit") %>
+<% end %>

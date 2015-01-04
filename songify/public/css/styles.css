@@ -1,0 +1,59 @@
+* {
+  box-sizing:border-box;
+}
+
+body {
+  width: 100%;
+  font: 14px sans-serif;
+  line-height: 1.5em;
+}
+
+#mainContainer {
+  margin: 0 auto;
+  width: 600px;
+}
+
+h1,h2 {
+  text-align: center;
+}
+
+#submit-form {
+  padding: 0;
+  margin: 0;
+  width: 400px;
+  text-align: left;
+  margin: 0 auto;
+}
+
+#form-container {
+  width: 100%;
+}
+
+input {
+  font: inherit;
+  width: 400px;
+}
+
+.form-buttons {
+  font-family: sans-serif; 
+  font-size: 25px;
+  width: 100px;
+}
+
+.album-list-image {
+  width: 60px;
+  height: 60px;
+}
+
+.list-table {
+  width: 100%;
+}
+
+.list-table td {
+  text-align: center;
+  padding: 5px;
+}
+
+#album-list-table tr:nth-child(even) {
+  background-color: #EEE;
+}

@@ -1,0 +1,13 @@
+<h1>Playlists#index</h1>
+<p>Find me in app/views/playlists/index.html.erb</p>
+
+<% @playlists.each do |playlist| %>
+<%= playlist.id %><br>
+<%= playlist.title %><br>
+<%= playlist.description %><br>
+<a href="/playlists/<%= playlist.id %>/edit">Update Video</a><br>
+<%= form_for [playlist], :html => { :method => :delete } do |f| %>
+  <%= f.submit "Delete Video" %>
+<% end %>
+<br><br>
+<% end %>

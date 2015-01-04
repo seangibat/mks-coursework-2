@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Songify</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<div id="mainContainer">
+  <h1><%= @album.title %></h1>
+
+  <% if @songs.length > 0 %>
+    <table class="list-table">
+      <tr><th>Track</th><th>Name</th><th>Youtube Link</th><th></th>
+      <% @songs.each do |song| %>
+        <tr>
+          <td>
+            <%= song.number %>
+          </td>
+          <td>
+            <%= song.name %>
+          </td>
+          <td>
+            <a href="<%= song.youtube_link %>">Link</a>
+          </td>
+          <td>
+          <button class="songEditButton" data-id="<%=song.id%>">Edit</button>
+            <button class="songRemoveButton" data-id="<%=song.id%>">Remove</button>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <br><br>
+  <div id="form-container">
+
+    <form method="POST" id="submit-form" action="/albums/<%= @id %>">
+      <input hidden name="number" value="<%= @songs.length + 1 %>">
+      <input hidden name="album_id" value="<%= @id %>">
+
+      <label for="name">
+        Song Name:
+        <input type="text" required placeholder="song name" name="name">
+      </label>
+      <br><br>
+      <label for="youtube_link">
+        Youtube Link:
+        <input type="text" required placeholder="youtube link" name="youtube_link">
+      </label>
+
+      <br><br>
+      <input class="form-buttons" type="submit">
+      <input class="form-buttons" type="reset" value="Clear">
+    </form>
+
+  </div>
+
+ </div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<h1>Playlists#show</h1>
+<p>Find me in app/views/playlists/show.html.erb</p>
+
+<%= @playlist.id %><br>
+<%= @playlist.title %><br>
+<%= @playlist.description %>
+<br><br>
+
+<% @videos.each do |video| %>
+<%= video.id %><br>
+<%= video.title %><br>
+<%= video.description %><br>
+<%= video.youtube_id %><br>
+<% end %>
+
+
+
+<%= form_for [@playlist, @comment] do |f| %>
+  <%= f.label :subject, 'Subject' %>:
+  <%= f.text_field :subject %><br>  
+  <%= f.label :body, 'Body' %>:
+  <%= f.text_field :body %>
+  <%= f.hidden_field :playlist_id, { :value => @playlist.id } %>
+  <%= f.submit %>
+<% end %>
+<br><br>
+
+<a href="/playlist/<%= @playlist.id %>/edit">Update Playlist</a><br>
+<%= form_for [@playlist], :html => { :method => :delete } do |f| %>
+  <%= f.submit "Delete Video" %>
+<% end %>
+
+<br><br>
+
+<% @comments.each do |comment| %>
+--COMMENT--<br>
+<b><%= comment.subject %></b><br>
+<%= comment.body %><br><br>
+
+
+<a href="/playlists/<%= @playlist.id %>/comments/<%= comment.id %>/edit">Update Comment</a>
+
+<%= form_for [@playlist, comment], :html => { :method => :delete } do |f| %>
+  <%= f.hidden_field :playlist_id, { :value => @playlist.id } %><br>
+  <%= f.submit "Delete Comment" %>
+<% end %>
+
+
+<% end %>

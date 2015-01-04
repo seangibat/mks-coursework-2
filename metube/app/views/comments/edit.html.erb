@@ -1,0 +1,7 @@
+<%= form_for [@context, @comment] do |f| %>
+  <%= f.label :subject, 'Subject' %>:
+  <%= f.text_field :subject %><br>  
+  <%= f.label :body, 'Body' %>:
+  <%= f.text_field :body %>
+  <%= f.submit %>
+<% end %>

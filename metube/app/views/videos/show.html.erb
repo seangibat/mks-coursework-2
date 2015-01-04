@@ -1,0 +1,37 @@
+<%= @video.id %><br>
+<%= @video.title %><br>
+<%= @video.description %><br>
+<%= @video.youtube_id %><br><br>
+
+<%= form_for [@video, @comment] do |f| %>
+  <%= f.label :subject, 'Subject' %>:
+  <%= f.text_field :subject %><br>  
+  <%= f.label :body, 'Body' %>:
+  <%= f.text_field :body %>
+  <%= f.hidden_field :video_id, { :value => @video.id } %>
+  <%= f.submit %>
+<% end %>
+<br><br>
+
+<a href="/videos/<%= @video.id %>/edit">Update Video</a><br>
+<%= form_for [@video], :html => { :method => :delete } do |f| %>
+  <%= f.submit "Delete Video" %>
+<% end %>
+
+<br><br>
+
+<% @comments.each do |comment| %>
+--COMMENT--<br>
+<b><%= comment.subject %></b><br>
+<%= comment.body %><br><br>
+
+
+<a href="/videos/<%= @video.id %>/comments/<%= comment.id %>/edit">Update Comment</a>
+
+<%= form_for [@video, comment], :html => { :method => :delete } do |f| %>
+  <%= f.hidden_field :video_id, { :value => @video.id } %><br>
+  <%= f.submit "Delete Comment" %>
+<% end %>
+
+
+<% end %>

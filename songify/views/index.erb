@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Songify</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="/lib/jquery-2.1.1.min.js"></script>
+   <script>
+
+var albumRemoveButtonClickHandler = function(){
+  var album_id = $(this).data('id');
+  var request = $.ajax({
+    type: 'DELETE',
+    url: '/albums/' + album_id
+  });
+
+  request.done(function(){
+    location.reload();
+  });
+};
+
+var playlistRemoveButtonClickHandler = function(){
+  var playlist_id = $(this).data('id');
+  var request = $.ajax({
+    type: 'DELETE',
+    url: '/playlists/' + playlist_id
+  });
+
+  request.done(function(){
+    location.reload();
+  });
+};
+
+$(document).on('click','.albumRemoveButton', albumRemoveButtonClickHandler);
+$(document).on('click','.playlistRemoveButton', playlistRemoveButtonClickHandler);
+
+   </script>
+</head>
+<body>
+  <%= @message %>
+  <div id="mainContainer">
+  <h1>Songify</h1>
+
+    <% if @albums.length > 0 %>
+    <h2>Albums</h2>
+      <table class="list-table">
+        <tr><th>Image</th><th>Title</th><th>Genre</th><th>Year</th><th></th></tr>
+        <% @albums.each do |album| %>
+        <tr class="albumRow">
+          <td class="albumImage">
+            <img src="<%= album.image_url %>" class="album-list-image">
+          </td>
+          <td>
+            <a href="albums/<%= album.id %>" class="albumTitle">
+              <%= album.title %>
+            </a>
+          </td>
+          <td class="albumGenre">
+            <%= album.genre %>
+          </td>
+          <td class="albumYear">
+            <%= album.year %>
+          </td>
+          <td>
+          <a href="/albums/<%= album.id %>/edit">Edit</a>
+            <button class="albumRemoveButton" data-id="<%=album.id%>">Remove</button>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    <% end %>
+<br><br>
+
+
+    <div id="form-container">
+      <form method="POST" id="submit-form" action="/albums">
+        <label for="title">
+          Title<br>
+          <input type="text" required placeholder="title" name="title">
+        </label>
+        <br><br>
+        <label for="year">
+          Year<br>
+          <input type="text" required placeholder="year" name="year">
+        </label>
+        <br><br>
+        <label for="genre">
+          Genre<br>
+          <input type="text" required placeholder="genre" name="genre">
+        </label>
+        <br><br>
+        <label for="image_url">
+          Image URL<br>
+          <input type="text"  required placeholder="image_url" name="image_url">
+        </label>
+        <br><br>
+        <input class="form-buttons" type="submit">
+        <input class="form-buttons" type="reset" value="Clear">
+      </form>
+      </div><br><br>
+
+          <% if @playlists.length > 0 %>
+          <h2>Playlists</h2>
+            <table class="list-table">
+              <tr><th>Title</th><th></th></tr>
+              <% @playlists.each do |playlist| %>
+              <tr class="playlistRow">
+                <td>
+                  <a href="playlists/<%= playlist.id %>">
+                    <%= playlist.name %>
+                  </a>
+                </td>
+                <td>
+                <button class="playlistEditButton" data-id="<%=playlist.id%>">Edit</button>
+                  <button class="playlistRemoveButton" data-id="<%=playlist.id%>">Remove</button>
+                </td>
+              </tr>
+              <% end %>
+            </table>
+          <% end %>
+      <br><br>
+
+      <div id="form-container">
+      <form method="POST" id="submit-form" action="/playlists">
+        <label for="title">
+          Name<br>
+          <input type="text" required placeholder="Playlist Name" name="name">
+        </label>
+        <br><br>
+        <input class="form-buttons" type="submit">
+        <input class="form-buttons" type="reset" value="Clear">
+      </form>
+      </div>
+
+   </div>
+
+</body>
+</html>

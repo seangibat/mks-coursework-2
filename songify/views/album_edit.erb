@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Songify</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div id="mainContainer">
+  <h1>Editing Album <%= @album.title %></h1>
+  <div id="form-container">
+    <form method="POST" id="submit-form" action="/albums/<%= @album.id %>">
+      <input hidden name="_method" value="PUT">
+      <label for="title">
+        Title<br>
+        <input type="text" required placeholder="title" value="<%= @album.title %>" name="title">
+      </label>
+      <br><br>
+      <label for="year">
+        Year<br>
+        <input type="text" required placeholder="year" value="<%= @album.year %>" name="year">
+      </label>
+      <br><br>
+      <label for="genre">
+        Genre<br>
+        <input type="text" required placeholder="genre" value="<%= @album.genre %>" name="genre">
+      </label>
+      <br><br>
+      <label for="image_url">
+        Image URL<br>
+        <input type="text"  required placeholder="image_url" value="<%= @album.image_url %>" name="image_url">
+      </label>
+      <br><br>
+      <input class="form-buttons" type="submit">
+      <input class="form-buttons" type="reset" value="Clear">
+    </form>
+  </div>
+</div>
+</body>
+</html>

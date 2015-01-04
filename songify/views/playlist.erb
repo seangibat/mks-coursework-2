@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Songify</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<div id="mainContainer">
+  <h1>Songify</h1>
+
+  <% if @songs.length > 0 %>
+    <table id="album-list-table">
+      <tr><th>Name</th><th>Youtube Link</th></tr>
+      <% @songs.each do |song| %>
+        <tr>
+          <td>
+            <%= song.name %>
+          </td>
+          <td>
+            <a href="<%= song.youtube_link %>">Link</a>
+          </td>
+          <td>
+            <button class="songRemoveFromPlaylistButton" data-id="<%=song.id%>">Remove</button>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <br><br>
+  <div id="form-container">
+
+    <form method="POST" id="submit-form" action="/playlists/<%= @id %>">
+      <input hidden name="playlist_id" value="<%= @id %>">
+
+      <label for="song_id">
+        Add song to playlist:
+        <select name="song_id">
+          <% @all_songs.each do |all_song| %>
+            <option value="<%= all_song.id %>">
+              <%= all_song.name %>
+            </option>
+          <% end %>
+        </select>
+      </label>
+      <br><br>
+      <input class="form-buttons" type="submit">
+    </form>
+
+  </div>
+
+ </div>
+
+</body>
+</html>

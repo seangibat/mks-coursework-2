@@ -1,0 +1,133 @@
+<html>
+<head>
+  <title>Javascript Bare</title>
+</head>
+<body>
+
+<script type="text/javascript">
+//   var bagOfChips = {
+//   count: 2,
+//   takeChip: function () {
+//     if (this.count === 0) {
+//       alert('No chips left!');
+//     }
+//     else {
+//       this.count = this.count - 1;
+//       alert('munch');
+//     }
+//   }
+// };
+// bagOfChips.takeChip();
+// bagOfChips.takeChip();
+// bagOfChips.takeChip();
+
+// var water = function (amount) {
+//   this.happiness += amount;
+//   console.log('You watered the ' + this.plantType);
+// };
+
+// var greenHouse = {
+//   room1: {
+//     plantType: 'strawberries',
+//     happiness: 3,
+//     water: water
+//   },
+//   room2: {
+//     plantType: 'eggplants',
+//     happiness: 1,
+//     water: water
+//   }
+// };
+
+// greenHouse.room1.water(2);
+// console.log('Strawberries should have 5 happiness:', greenHouse.room1.happiness);
+
+// greenHouse.room2.water(23);
+// console.log('Eggplants should have 24 happiness:', greenHouse.room2.happiness);
+
+// var sprayPixieDust = function (person) {
+//   person.pixieDust += 1;
+// };
+
+// var wendy = {
+//   fly: function () {
+//     if (this.pixieDust < 2) {
+//       return 'thump!';
+//     }
+//     else {
+//       return 'I can fly!';
+//     }
+//   },
+//   pixieDust: 0
+// };
+
+// console.log('Wendy should not be able to fly (yet):', wendy.fly());
+
+// sprayPixieDust(wendy);
+// console.log('Wendy should STILL not be able to fly:', wendy.fly());
+
+// sprayPixieDust(wendy);
+// console.log('Can she fly now?', wendy.fly());
+
+// var stealCoins = function(num){
+//   this.coinCount -= num;
+//   if (this.coinCount < 0)
+//     this.coinCount = 0;
+// }
+
+// var wishingWell = {
+//   coinCount: 2,
+//   wishToss: function () {
+//     this.coinCount += 1;
+//   },
+//   stealCoins: stealCoins
+// };
+
+// wishingWell.wishToss();
+// console.log('Wishing well should have 3 coins:', wishingWell.coinCount);
+
+// wishingWell.stealCoins(2);
+// console.log('Wishing well should have 1 coin:', wishingWell.coinCount);
+
+// wishingWell.stealCoins(5);
+// console.log('Wishing well should have 0 coins:', wishingWell.coinCount);
+
+// var musicPlayer = {
+//   currentlyPlaying: null,
+//   play: function(music){
+//     this.currentlyPlaying = music;
+//   }
+// };
+
+// musicPlayer.play('Giant Steps');
+// console.log('Music player should be playing "Giant Steps":', musicPlayer.currentlyPlaying);
+
+// musicPlayer.play('Blue Glasses');
+// console.log('Music player should be playing "Blue Glasses":', musicPlayer.currentlyPlaying);
+
+var revealSecret = function () {
+  return this.secret;
+};
+
+var incept = function (person, func) {
+  person.inception = func;
+  var result = person.inception();
+  alert(person.name + " said: " + result);
+};
+
+var spy = {
+  name: "Mr. Smith",
+  secret: "I like pie"
+};
+incept(spy, revealSecret);
+
+var otherSpy = {
+  name: "Dr. Tran",
+  secret: "I can lick my elbow"
+};
+incept(otherSpy, revealSecret);
+
+</script>
+
+</body>
+</html>

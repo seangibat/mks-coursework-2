@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercise 1</title>
+  <style>
+
+  div {
+    box-model:border-box;
+  }
+
+  body {
+    margin:0;
+    padding:0;
+    font: 16px arial;
+    color: white;
+    background-color:#777;
+  }
+
+  .header {
+    background-color:#999;
+  }
+
+  .footer {
+    background-color:#998;
+    position: absolute;
+    bottom:0;
+    right:0;
+    left:0;
+  }
+
+  .widget {
+    background-color: #889;
+  }
+
+  .gadget {
+    background-color: #F38;
+    border-radius: 15px;
+  }
+
+  .blue {
+    background-color: #449;
+  }
+
+  .sub-widget {
+    background-color: #948;
+    padding:10px;
+    margin-top:10px;
+  }
+
+  .widget, .gadget {
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin: 20px;
+  }
+
+  .header, .footer, .widget, .gadget {
+    padding:15px;
+  }
+
+
+  </style>
+</head>
+<body>
+
+<div class="header">header</div>
+
+<div class="container">
+  <div class="widget">widget</div>
+  <div class="widget">widget
+    <div class="sub-widget">sub-widget</div>
+  </div>
+  <div class="widget blue">widget blue</div>
+  <div class="gadget">gadget</div>
+  <div class="widget blue">widget blue</div>
+  <div class="widget">widget</div>
+  <div class="gadget blue">gadget blue</div>
+  <div class="widget">widget</div>
+  <div class="gadget">gadget</div>
+  <div class="widget">widget</div>
+</div>
+
+<div class="footer">footer</div>
+  
+</body>
+</html>

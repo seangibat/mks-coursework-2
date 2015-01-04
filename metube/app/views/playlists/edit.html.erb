@@ -1,0 +1,13 @@
+<h1>Playlists#edit</h1>
+<p>Find me in app/views/playlists/edit.html.erb</p>
+
+<%= form_for [@playlist] do |f| %>
+  <%= f.label :title, 'Title' %>:
+  <%= f.text_field :title %><br>  
+  <%= f.label :description, 'Description' %>:
+  <%= f.text_field :description %>
+
+<%= f.select :video_ids, Video.all.collect {|x| [x.title, x.id]}, {}, :multiple => true %><br>
+  
+  <%= f.submit %>
+<% end %>

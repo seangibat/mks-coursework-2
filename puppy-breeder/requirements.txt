@@ -1,0 +1,23 @@
+As a breeder, I want to be able to set different prices for different breeds.
+
+- setting the price on a Breed will create a new instance of class Breed with that price and store it
+
+As a breeder, I want to be able to make a purchase request for a customer, with the customer's desired breed and the customer's name.
+
+- will create a new instance of the purchase request class, using Breed to get the breed, and storing that with the customer's name
+
+As a breeder, I want to be able to add new puppies to my inventory.
+
+- will create a new instance of the Puppy class with a type that is only text (so that we can reference the current price), and store it in a hash with the puppy breed as key?
+
+As a breeder, I want to be able to review and complete purchase requests.
+
+- function in puppy-breeder will list all uncompleted purchase requests and the amount of puppies for the type of requested puppy
+
+As a breeder, I want to keep a record of past puppy sales.
+
+- boolean in purchase request for complete or not?
+
+As a breeder, I want to be able to view all completed purchase orders and all pending purchase orders.
+
+- list all purchase requests, complete and not complete?

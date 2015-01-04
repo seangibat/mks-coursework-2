@@ -1,0 +1,5 @@
+git log to get all commits
+git status see status of current commit
+git reset HEAD to revert modifications to last commit
+git reset --soft [branch] to revert to old branch with kept changes
+git reset --hard to compeletely abandon changes

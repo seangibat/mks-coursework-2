@@ -1,0 +1,15 @@
+1. _this to transport scope
+2. indexOf will only return the first value
+3. .on('click') is more proper 
+4. use namespaces with .on('click.cows',func
+5. delegate events to the parent like $('table').on('click','td')
+6. use + to coerce strings to number
+7. always use ===
+8. objects can retrieve the value of the prototype above them and so on, chained all the way back to Object
+7. String.prototype.interger = func would add that method to all string types, even primitives.
+8. don’t create functions inside loops referencing the iterator — can lead to a function referencing the last value of the iterator variable e.g. i or x; use a helper function instead
+9. the module pattern can be used to return functions, not just objects
+10. return this to cascade functions — like jQuery function chaining
+11. location 1184 in good parts — you can build functions that alter modules and give them properties. could be good if you find yourself giving many modules that same properties
+12. properties can be deleted with delete, variables cannot. var global defines a variable, but not using var defines a proper of the global object
+13. fn.length will give you how many parameters a function is expecting
