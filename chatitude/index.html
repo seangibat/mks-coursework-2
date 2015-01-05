@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CHAT</title>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <style>
+
+    div, form, p {
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 100%;
+    }
+
+    #chat-form-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 8px;
+      padding-right: 8px;
+    }
+
+    #chat-input {
+      width: 100%;
+      font-size: 20px;
+      padding: 8px;
+      line-height: 24px;
+      margin: 8px;
+      z-index: 2;
+    }
+
+    #chats-container {
+      height: 100%;
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+
+    .chat {
+
+    }
+
+    .login-signup-container {
+      z-index: 5;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-color: white;
+    }
+
+  </style>
+
+  <script id="chats-template" type="text/template">
+    {{#each this}}
+      <p>{{ user }}: {{ message }}</p>
+    {{/each}}
+  </script>
+
+  <script id="chat-template" type="text/template">
+    <p>{{ user }}: {{ message }}</p>
+  </script>
+</head>
+<body>
+
+  <div id="login-signup-container">
+    <div>
+      <form id="signup-form">
+        SIGN UP
+        <input type="text" id="signup-username" name="username" placeholder="username">
+        <input type="text" id="signup-password" name="password" placeholder="password">
+        <input type="submit" value="Submit">
+      </form>
+    </div><br>
+    <div>
+      <form id="login-form">
+        OR LOG IN
+        <input type="text" id="login-username" name="username" placeholder="username">
+        <input type="text" id="login-password" name="password" placeholder="password">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+    <div id="login-signup-message"></div>
+  </div>
+
+  <div id="chats-container">
+  </div>
+  
+  <div id="chat-form-container">
+    <form id="chat-form">
+      <input id="chat-input" name="message" type="text">
+    </form>
+  </div>
+
+  <script>
+  var Chat = (function(){
+    var $chatsContainer, user, $chatInput, chatTemplate, chatsTemplate, domain, timeSinceLast,
+    apiToken, user;
+
+    var signupFormSubmitHandler = function(event){
+      event.preventDefault();
+      $.ajax({
+        method: "POST",
+        url: domain + "/signup",
+        data: $("#signup-form").serialize(),
+        statusCode: {
+          200: function(){
+            $('#login-signup-message').text("User account successfully created.");
+          }
+        }
+      });
+      $('#signup-username').val('');
+      $('#signup-password').val('');
+    };
+
+    var loginFormSubmitHandler = function(event){
+      event.preventDefault();
+      $.ajax({
+        method: "POST",
+        url: domain + "/signin",
+        data: $("#login-form").serialize(),
+        success: function(data){
+          $('#login-signup-container').hide();
+          apiToken = data.apiToken;
+          user = $('#login-username').val();
+          getChats();
+          setInterval(getChats, 10000);
+        }
+      });
+      $('#login-password').val('');
+    };
+
+    var chatFormSubmitHandler = function(event){
+      event.preventDefault();
+      var chat = {
+        message: $chatInput.val(),
+        apiToken: apiToken,
+        user: user
+      };
+      $chatInput.val('');
+      $.post(domain + "/chats", chat, function(data){
+        $chatsContainer.append(chatTemplate(chat));
+      });
+    };
+
+    var getChats = function(){
+      $.get(domain + '/chats', function(data){
+        console.log(data);
+        $chatsContainer.html(chatsTemplate(data));
+        window.scrollTo(0,document.body.scrollHeight);
+      });
+    }
+
+    var init = function(){
+      $chatsContainer = $('#chats-container');
+      $chatInput = $('#chat-input');
+      chatTemplate = Handlebars.compile($('#chat-template').html());
+      chatsTemplate = Handlebars.compile($('#chats-template').html());
+      domain = "http://chat.api.mks.io";
+      $(document).on('submit', '#signup-form', signupFormSubmitHandler);
+      $(document).on('submit', '#login-form', loginFormSubmitHandler);
+      $(document).on('submit', '#chat-form', chatFormSubmitHandler);
+    };
+
+    $(document).ready(init);
+  })();
+  </script>
+</body>
+</html>
