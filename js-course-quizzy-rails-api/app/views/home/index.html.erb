@@ -1,0 +1,26 @@
+<style>
+  .link {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+</style>
+
+<h2>Quizzy Quizz</h2>
+
+<div id="quiz-listings-container">
+</div>
+
+<div id="question-container">
+</div>
+
+
+<!-- -stuff- -->
+
+<script id="question-template" type="text/template">
+</script>
+
+<script id="quiz-listings-template" type="text/template">
+  {{ quizzes.forEach(function(quiz){ }}
+    <p class="quiz link" data-quiz-id="{{= quiz.id }}">{{= quiz.title }}</p>
+  {{ }); }}
+</script>
