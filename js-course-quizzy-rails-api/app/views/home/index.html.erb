@@ -3,24 +3,120 @@
     cursor: pointer;
     text-decoration: underline;
   }
+  #sidebar-container {
+    float: left;
+    width: 200px;
+  }
+  #message-container {
+    position: fixed;
+    top:0;
+    left:240px;
+    color: red;
+    padding:20px;
+    font-weight: bold;
+  }
+  #main-container {
+    float: left;
+    padding-left: 20px;
+  }
 </style>
 
-<h2>Quizzy Quizz</h2>
+<h2>Quiz Please</h2>
 
-<div id="quiz-listings-container">
+<div id="sidebar-container">
+  <p class="link new-quiz">New Quiz</p>
+  <h3>Quiz Listings</h3>
+  <div id="quiz-listings-container">
+  </div>
 </div>
 
-<div id="question-container">
+<div id="message-container">
+</div>
+
+<div id="main-container">
 </div>
 
 
 <!-- -stuff- -->
 
-<script id="question-template" type="text/template">
+<script id="choices-question-template" type="text/template">
+  {{= question.question }}<br>
+  {{ question.choices.forEach(function(choice){ }}
+    <p class="submit-answer link" data-answer="{{= choice }}">{{= choice }}</p><br>
+  {{ }); }}
+</script>
+
+<script id="blank-question-template" type="text/template">
+  {{= question.question }}<br>
+  <form class="form blank-question">
+    <input type="text" name="answer" class="answer blank-question">
+    <input type="submit" value="Answer">
+  </form>
 </script>
 
 <script id="quiz-listings-template" type="text/template">
+<ul>
   {{ quizzes.forEach(function(quiz){ }}
-    <p class="quiz link" data-quiz-id="{{= quiz.id }}">{{= quiz.title }}</p>
+    <li class="quiz link" data-quiz-id="{{= quiz.id }}">
+      {{= quiz.title }}
+      <ul>
+        <li class="link new-question" data-quiz='{{= JSON.stringify(quiz) }}'>Create question</li>
+        <li class="link edit-quiz" data-quiz='{{= JSON.stringify(quiz) }}'>Edit quiz</li>
+      </ul>
+    </li>
+    
   {{ }); }}
+</ul>
+</script>
+
+<script id="final-score-template" type="text/template">
+  Correct: {{= score.correct }} out of {{= score.total }}
+</script>
+
+<script id="question-result-template" type="text/template">
+  Interesting. Never seen someone be so {{= result }}
+</script>
+
+<script id="new-quiz-template" type="text/template">
+  <form class="form new-quiz">
+    Quiz Name: <input class="name new-quiz" name="quiz[title]" type="text"><br>
+    <input type="submit" value="Create">
+  </form>
+</script>
+
+<script id="new-question-template" type="text/template">
+  <div>Creating Question for Quiz <strong>{{= quiz.title }}</strong></div>
+  <form class="form new-question" data-quiz='{{= JSON.stringify(quiz) }}'>
+    Question: <input class="question new-question" name="question[question]" type="text"><br>
+    Answer: <input class="answer new-question" name="question[answer]" type="text"><br>
+    Type: 
+      <select class="type new-question" name="question[question_type]">
+        <option selected value="multiple">Multiple</option>
+        <option value="boolean">Boolean</option>
+        <option value="blank">Blank</option>
+      </select><br>
+    Choices: <input class="choices new-question" name="question[choices]" type="text"><br>
+    <input type="submit" value="Create">
+  </form>
+</script>
+
+<script id="quiz-create-success-template" type="text/template">
+  <strong>Quiz Title:</strong > {{= quiz.title }}, <strong>Quiz Id:</strong> {{= quiz.id }}, created successfull!<br>
+  <p class="link new-question" data-quiz='{{= JSON.stringify(quiz) }}'>Create question?</p>
+</script>
+
+<script id="edit-quiz-template" type="text/template">
+  <div>Editing Quiz <strong>{{= quiz.title }}</strong></div>
+  <form class="form new-question" data-quiz='{{= JSON.stringify(quiz) }}'>
+    Question: <input class="question new-question" name="question[question]" type="text"><br>
+    Answer: <input class="answer new-question" name="question[answer]" type="text"><br>
+    Type: 
+      <select class="type new-question" name="question[type]">
+        <option selected value="multiple">Multiple</option>
+        <option value="boolean">Boolean</option>
+        <option value="blank">Blank</option>
+      </select><br>
+    Choices: <input class="choices new-question" name="question[choices]" type="text"><br>
+    <input type="submit" value="Create">
+  </form>
 </script>
