@@ -16,7 +16,7 @@ var API = (function(){
       place = 0;
       right = 0;
       quizId = id;
-      cb(data[0]);
+      cb(data);
     });
   };
 
@@ -54,16 +54,36 @@ var API = (function(){
       item.choices = item.choices.split(';');
     });
     return questions;
-  }
+  };
+
+  var updateQuizFn = function(quizId, obj, cb){
+    $.ajax({
+      method: 'PUT',
+      data: obj,
+      url: '/quizzes/' + quizId,
+      success: cb
+    });
+  };
+
+  var updateQuestionFn = function(quizId, questionId, obj, cb){
+    $.ajax({
+      method: 'PUT',
+      data: obj,
+      url: '/quizzes/' + quizId + '/questions/' + questionId,
+      success: cb
+    });
+  };
 
   return {
     quizzes        : quizzesFn,
     questions      : questionsFn,
     createQuiz     : createQuizFn,
+    updateQuiz     : updateQuizFn,
     submitAnswer   : submitAnswerFn,
     nextQuestion   : nextQuestionFn,
+    updateQuestion : updateQuestionFn,
     quizFinalScore : quizFinalScoreFn,
-    createQuestion : createQuestionFn
+    createQuestion : createQuestionFn,
   }
 
 })();
@@ -71,7 +91,7 @@ var API = (function(){
 var Display = (function(){
   var quizListingTemplate, choicesQuestionTemplate, $messageContainer, $quizListingsContainer, 
     $mainContainer, questionResultTemplate, finalScoreTemplate, newQuizTemplate, newQuestionTemplate,
-    quizCreateSuccessTemplate;
+    quizCreateSuccessTemplate, editQuizTemplate;
 
   var quizzesFn = function(quizzes){
     $quizListingsContainer.html(quizListingsTemplate({quizzes: quizzes}));
@@ -97,6 +117,10 @@ var Display = (function(){
     $mainContainer.html(newQuizTemplate());
   };
 
+  var editQuizFormFn = function(quiz, questions){
+    $mainContainer.html(editQuizTemplate({quiz: quiz, questions: questions }));
+  };
+
   var newQuestionFormFn = function(quiz){
     $mainContainer.html(newQuestionTemplate({quiz: quiz}));
   };
@@ -119,6 +143,7 @@ var Display = (function(){
     finalScoreTemplate = _.template($('#final-score-template').html());
     questionResultTemplate = _.template($('#question-result-template').html());
     newQuizTemplate = _.template($('#new-quiz-template').html());
+    editQuizTemplate = _.template($('#edit-quiz-template').html());
     newQuestionTemplate = _.template($('#new-question-template').html());
     quizCreateSuccessTemplate = _.template($('#quiz-create-success-template').html());
     $quizListingsContainer = $('#quiz-listings-container');
@@ -132,6 +157,7 @@ var Display = (function(){
     message           : messageFn,
     finalScore        : finalScoreFn,
     newQuizForm       : newQuizFormFn,
+    editQuizForm      : editQuizFormFn,
     blankQuestion     : blankQuestionFn,
     questionResult    : questionResultFn,
     choicesQuestion   : choicesQuestionFn,
@@ -159,8 +185,8 @@ var UI = (function(){
 
   var quizClickHandler = function(){
     var quizId = $(this).data('quiz-id');
-    API.questions(quizId, function(question){
-      processAndDisplayQuestion(question);
+    API.questions(quizId, function(questions){
+      processAndDisplayQuestion(questions[0]);
     });
   };
 
@@ -201,6 +227,14 @@ var UI = (function(){
     Display.newQuizForm();
   };
 
+  var editQuizClickHandler = function(event){
+    event.stopPropagation();
+    var quiz = $(this).data('quiz');
+    API.questions(quiz.id, function(questions){
+      Display.editQuizForm(quiz, questions);
+    });
+  };
+
   var createQuestionClickHandler = function(event){
     event.stopPropagation();
     var quiz = $(this).data('quiz');
@@ -208,10 +242,12 @@ var UI = (function(){
   };
 
   var typeChangeHandler = function(){
-    if ($(".type.new-question option:selected").val() === "multiple")
-      $('.choices.new-question').show();
+    console.log($(this));
+    // var input = $(this).next().next('.choices');
+    if ($(this).find("option:selected").val() === "multiple")
+      $(this).next().next().show();
     else
-      $('.choices.new-question').hide();
+      $(this).next().next().hide();
   };
 
   var newQuizSubmitHandler = function(event){
@@ -225,6 +261,43 @@ var UI = (function(){
         Display.createQuizSuccess(data.entity);
         quizListingsFn();
       }
+    });
+  };
+
+  var editQuizSubmitHandler = function(event){
+    var totalUpdatesReceived = 0;
+    event.preventDefault();
+
+    var afterQuestionSubmit = function(data){
+      if (data.status = 200) {
+        totalUpdatesReceived++;
+        if (totalUpdatesReceived == questions.length) {
+          Display.message("Quiz successfully updated!");
+        }
+      }
+    };
+
+    var result = {};
+    $(this).serializeArray().forEach(function(x){result[x.name] = x.value;});
+
+    var questions = $(this).data('questions');
+    var quiz = $(this).data('quiz');
+
+    console.log(questions);
+
+    API.updateQuiz(quiz.id, {'quiz[title]':result['quiz[title]']}, function(ok){
+      if (ok.status = 200){
+        questions.forEach(function(question){
+          var newQuestion = {
+            'question[question]': result['q' + question.id + 'question'],
+            'question[answer]': result['q' + question.id + 'answer'],
+            'question[question_type]': result['q' + question.id + 'question_type'],
+            'question[choices]': result['q' + question.id + 'choices']
+          }
+          API.updateQuestion(quiz.id, question.id, newQuestion, afterQuestionSubmit);
+        });
+      }
+      else Display.message("Could not update quiz.");
     });
   };
 
@@ -251,9 +324,11 @@ var UI = (function(){
     $(document).on('click', '.submit-answer.link', submitAnswerClickHandler);
     $(document).on('submit', '.form.blank-question', submitBlankAnswerHandler);
     $(document).on('click', '.link.new-quiz', createQuizClickHandler);
+    $(document).on('click', '.link.edit-quiz', editQuizClickHandler);
     $(document).on('click', '.link.new-question', createQuestionClickHandler);
-    $(document).on('change', '.type.new-question', typeChangeHandler);
+    $(document).on('change', 'select.type', typeChangeHandler);
     $(document).on('submit', '.form.new-quiz', newQuizSubmitHandler);
+    $(document).on('submit', '.form.edit-quiz', editQuizSubmitHandler);
     $(document).on('submit', '.form.new-question', newQuestionSubmitHandler);
   };
 

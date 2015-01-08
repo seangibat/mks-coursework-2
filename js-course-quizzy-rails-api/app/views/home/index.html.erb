@@ -36,6 +36,12 @@
 <div id="main-container">
 </div>
 
+<script>
+  $(document).ready(function() {
+    var controller = new Controllers.Quiz($("#quizzes-display"));
+    controller.showQuizzes();
+  });
+</script>
 
 <!-- -stuff- -->
 
@@ -57,7 +63,7 @@
 <script id="quiz-listings-template" type="text/template">
 <ul>
   {{ quizzes.forEach(function(quiz){ }}
-    <li class="quiz link" data-quiz-id="{{= quiz.id }}">
+    <li class="quiz link" data-quiz-id='{{= quiz.id }}'>
       {{= quiz.title }}
       <ul>
         <li class="link new-question" data-quiz='{{= JSON.stringify(quiz) }}'>Create question</li>
@@ -106,17 +112,22 @@
 </script>
 
 <script id="edit-quiz-template" type="text/template">
+{{ var sing =/\'/g, doub = ''; }}
   <div>Editing Quiz <strong>{{= quiz.title }}</strong></div>
-  <form class="form new-question" data-quiz='{{= JSON.stringify(quiz) }}'>
-    Question: <input class="question new-question" name="question[question]" type="text"><br>
-    Answer: <input class="answer new-question" name="question[answer]" type="text"><br>
-    Type: 
-      <select class="type new-question" name="question[type]">
-        <option selected value="multiple">Multiple</option>
-        <option value="boolean">Boolean</option>
-        <option value="blank">Blank</option>
-      </select><br>
-    Choices: <input class="choices new-question" name="question[choices]" type="text"><br>
-    <input type="submit" value="Create">
+  <form class="form edit-quiz" data-quiz='{{= JSON.stringify(quiz) }}' data-questions='{{= JSON.stringify(questions).replace(sing, doub) }}' data-length="{{=questions.length}}">
+    Quiz Name:<input type="text" name="quiz[title]" value="{{= quiz.title }}"><br><br>
+    {{ questions.forEach(function(question){ }}
+      Question: <input class="question edit-question" name="q{{=question.id}}question" type="text" value="{{= question.question }}"><br>
+      Answer: <input class="answer edit-question" name="q{{=question.id}}answer" type="text" value="{{= question.answer }}"><br>
+      Type: 
+        <select class="type edit-question" name="q{{=question.id}}question_type">
+          <option {{= (question.question_type == 'multiple' || question.question_type == null) ? "selected" : "" }} value="multiple">Multiple</option>
+          <option {{= (question.question_type == 'boolean') ? "selected" : "" }} value="boolean">Boolean</option>
+          <option {{= (question.question_type == 'blank') ? "selected" : "" }} value="blank">Blank</option>
+        </select><br>
+      Choices: 
+        <input style="display:{{= (question.question_type == 'multiple' || question.question_type == null) ? 'inline' : 'none' }};" class="choices edit-question" name="q{{=question.id}}choices" type="text" value="{{= question.choices.join(';') }}"><br><br>
+    {{ }); }}
+    <input type="submit" value="Submit"><br><br>
   </form>
 </script>
