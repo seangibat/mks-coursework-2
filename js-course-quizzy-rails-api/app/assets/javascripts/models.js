@@ -19,6 +19,17 @@
     });
   };
 
+  Quiz.submitScore = function(quizId, score, name, cb){
+    $.ajax({
+      method: "POST",
+      url: "/quizzes/" + quizId + "/scores",
+      success: cb,
+      data: {
+        "score[score]" : score,
+        "score[user]"  : name
+      }},function(){});
+  };
+
   Quiz.prototype.save = function(cb) {
     // use this.id, this.title to make ajax request
   };
@@ -59,8 +70,12 @@
       method: "GET",
       url: "/quizzes/" + _this.quizId + "/questions/" + _this.id + "/check?answer=" + answer,
       success: function(data){
+        console.log(data);
         if (data.correct){
-          this.correct = true;
+          _this.correct = true;
+        }
+        else {
+          _this.correct = false;
         }
         cb(data);
       }

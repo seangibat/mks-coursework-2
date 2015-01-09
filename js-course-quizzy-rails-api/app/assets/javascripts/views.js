@@ -1,20 +1,18 @@
 (function() {
-  var QuizView = function($el, quizzes) {
+  var QuizView = function($container, quizzes) {
     this.element = $('<div>')
-    this.quizzes = quizzes;
-    var template = $('#quizzes-template').html();
-    var uncompiledTemplate = _.template(template);
-    var $html = $(uncompiledTemplate({quizzes: this.quizzes}));
+    var uncompiledTemplate = _.template($('#quizzes-template').html());
+    this.element.html($(uncompiledTemplate({quizzes: quizzes})));
 
     var _view = this;
-    $html.children('.quiz').on('click', function() {
+    this.element.find('.quiz').on('click', function() {
       var id = $(this).data("quiz-id");
       _view.element.remove();
-      var questionsController = new Controllers.Questions($el, id);
+      var questionsController = new Controllers.Questions($container, id);
       questionsController.showFirstQuestion();
     });
 
-    $el.html($html);
+    $container.html(this.element);
   };
 
   window.Views = window.Views || {};
@@ -22,20 +20,19 @@
 })();
 
 (function() {
-  var ChoicesQuestionView = function($el, question, controller) {
+  var ChoicesQuestionView = function($container, controller, question) {
     this.element = $('<div>');
-    var template = $('#choices-question-template').html();
-    var uncompiledTemplate = _.template(template);
-    var $html = $(uncompiledTemplate({question: question}));
-
+    var uncompiledTemplate = _.template($('#choices-question-template').html());
+    this.element.html(uncompiledTemplate({question: question}));
+    
     var _view = this;
-    $html.children('.link.submit-answer').on('click', function() {
+    this.element.find('.link.submit-answer').on('click', function() {
       var answer = $(this).data("answer");
       _view.element.remove();
       controller.submitAnswer(question, answer);
     });
 
-    $el.html($html);
+    $container.html(this.element);
   };
 
   window.Views = window.Views || {};
@@ -43,21 +40,20 @@
 })();
 
 (function() {
-  var BlankQuestionView = function($el, question, controller) {
+  var BlankQuestionView = function($container, controller, question) {
     this.element = $('<div>');
-    var template = $('#blank-question-template').html();
-    var uncompiledTemplate = _.template(template);
-    var $html = $(uncompiledTemplate({question: question}));
+    var uncompiledTemplate = _.template($('#blank-question-template').html());
+    this.element.html(uncompiledTemplate({question: question}));
 
     var _view = this;
-    $html.children('.form.submit-answer').on('submit', function(event) {
+    this.element.find('.form.blank-question').on('submit', function(event) {
       event.preventDefault();
       var answer = $(this).find('.answer.input').val();
       _view.element.remove();
       controller.submitAnswer(question, answer);
     });
 
-    $el.html($html);
+    $container.html(this.element);
   };
 
   window.Views = window.Views || {};
@@ -65,12 +61,11 @@
 })();
 
 (function() {
-  var QuestionResultView = function($el, result, controller) {
+  var QuestionResultView = function($container, controller, result) {
     this.element = $('<div>');
-    var template = $('#question-result-template').html();
-    var uncompiledTemplate = _.template(template);
-    var $html = $(uncompiledTemplate({result: result}));
-    $el.html($html);
+    var uncompiledTemplate = _.template($('#question-result-template').html());
+    this.element.html(uncompiledTemplate({result: result}));
+    $container.html(this.element);
   };
 
   window.Views = window.Views || {};
@@ -78,22 +73,48 @@
 })();
 
 (function() {
-  var QuizResultView = function($el, correct, total, controller) {
+  var QuizResultView = function($container, controller, correct, total) {
     this.element = $('<div>');
-    var template = $('#final-score-template').html();
-    var uncompiledTemplate = _.template(template);
-    var $html = $(uncompiledTemplate({correct: correct, total: total}));
-    var _view = this;
+    var uncompiledTemplate = _.template($('#final-score-template').html());
+    this.element.html(uncompiledTemplate({correct: correct, total: total}));
 
-    $html.children('.link.new-quiz').on('click', function() {
+    var _view = this;
+    this.element.find('.link.new-quiz').on('click', function() {
       _view.element.remove();
-      var controller = new Controllers.Quiz($el);
+      var controller = new Controllers.Quiz($container);
       controller.showQuizzes();
     });
+    this.element.find('.submit-score').on('submit', function(event) {
+      event.preventDefault();
+      var name = $('#score-name').val();
+      $(this).remove();
+      _view.element.append("<br>Score submitted!");
+      controller.submitScore(name, correct);
+    });
 
-    $el.html($html);
+    $container.html(this.element);
   };
 
   window.Views = window.Views || {};
   window.Views.QuizResult = QuizResultView;
+})();
+
+(function() {
+  var MessageView = function($container, message) {
+    this.element = $('<div>');
+    var uncompiledTemplate = _.template($('#message-template').html());
+    this.element.html(uncompiledTemplate({message: message}));
+
+    var _view = this;
+    this.element.find('.link.new-quiz').on('click', function() {
+      _view.element.remove();
+      var controller = new Controllers.Quiz($container);
+      controller.showQuizzes();
+    });
+
+    $container.html(this.element);
+  };
+
+  window.Views = window.Views || {};
+  window.Views.Message = MessageView;
 })();

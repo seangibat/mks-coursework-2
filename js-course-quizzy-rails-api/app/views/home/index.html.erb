@@ -18,10 +18,6 @@
 
 <h2>Quiz Please</h2>
 
-
-<div id="message-container">
-</div>
-
 <div id="main-container">
   <div id="quizzes-display">
   </div>
@@ -71,7 +67,11 @@
 
 <script id="final-score-template" type="text/template">
   <div>
-    Correct: {{= correct }} out of {{= total }}
+    Correct: {{= correct }} out of {{= total }}<br><br>
+    <form class="submit-score">
+      Submit score?<br>
+      name: <input type="text" placeholder="score" id="score-name">
+      <input type="submit">
     <p class="link new-quiz">Take another quiz</p>
   </div>
 </script>
@@ -80,6 +80,11 @@
   <div>
     Interesting. Never seen someone be so {{= result }}
   </div>
+</script>
+
+<script id="message-template" type="text/template">
+  <div>{{= message }}</div>
+  <p class="link new-quiz">Take a different quiz</p>
 </script>
 
 <script id="new-quiz-template" type="text/template">

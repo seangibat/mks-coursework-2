@@ -26,13 +26,16 @@
       _this.questions = questions;
       _this.place = 0;
       var question = _this.questions[0];
-
-      if (question.type === "multiple" || question.type == null || question.type == "boolean"){
+      if (!question) {
+        console.log('hi')
+        new Views.Message(_this.$el, "No questions for this quiz.");
+      }
+      else if (question.type === "multiple" || question.type == null || question.type == "boolean"){
         question.choices = (question.type == 'boolean') ? ['true','false'] : question.choices.split(';');
-        new Views.ChoicesQuestion(_this.$el, question, _this);
+        new Views.ChoicesQuestion(_this.$el, _this, question);
       }
       else
-        new Views.BlankQuestion(_this.$el, question, _this);
+        new Views.BlankQuestion(_this.$el, _this, question);
     });
   };
 
@@ -43,10 +46,10 @@
       this.showFinalScore();
     else if (question.type === "multiple" || question.type == null || question.type == "boolean"){
       question.choices = (question.type == 'boolean') ? ['true','false'] : question.choices.split(';');
-      new Views.ChoicesQuestion(this.$el, question, this);
+      new Views.ChoicesQuestion(this.$el, this, question);
     }
     else
-      new Views.BlankQuestion(this.$el, question, this);
+      new Views.BlankQuestion(this.$el, this, question);
   };
 
   QuestionsController.prototype.submitAnswer = function(question, answer) {
@@ -54,17 +57,27 @@
     console.log(_this);
     question.submitAnswer(answer, function(data){
       var result = (data.correct) ? "CORRECT" : "WRONG";
-      new Views.QuestionResult(_this.$el, result, _this);
+      new Views.QuestionResult(_this.$el, _this, result);
       setTimeout(function(){
         _this.showNextQuestion();
       },1000);
     });
   };
 
+  QuestionsController.prototype.submitScore = function(name, correct) {
+    var _this = this;
+    Models.Quiz.submitScore(this.quizId, correct*1000, name, function(data){
+
+    });
+  };
+
   QuestionsController.prototype.showFinalScore = function() {
-    _controller = this;
-    var right = this.questions.reduce(function(prev, question){ return prev + (question.correct) ? 1 : 0 },0);
-    new Views.QuizResult(this.$el, right, this.questions.length, this);
+    var right = this.questions.reduce(function(prev, question){ 
+      console.log(prev, question.correct); 
+      return (prev + ((question.correct) ? 1 : 0)); 
+    },0);
+
+    new Views.QuizResult(this.$el, this, right, this.questions.length);
   };
 
   window.Controllers = window.Controllers || {};

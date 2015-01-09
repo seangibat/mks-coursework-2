@@ -22,6 +22,8 @@ class ScoresController < AJAXController
   # POST /scores
   # POST /scores.json
   def create
+    puts score_params
+    puts @quiz.id
     @score = @quiz.scores.new(score_params)
 
     if @score.save
