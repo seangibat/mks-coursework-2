@@ -3,6 +3,10 @@
     cursor: pointer;
     text-decoration: underline;
   }
+  #sidebar-container {
+    float: left;
+    width: 200px;
+  }
   #message-container {
     position: fixed;
     top:0;
@@ -12,42 +16,35 @@
     font-weight: bold;
   }
   #main-container {
+    float: left;
     padding-left: 20px;
   }
 </style>
 
 <h2>Quiz Please</h2>
 
+<div id="sidebar-container">
+  <p class="link new-quiz">New Quiz</p>
+  <h3>Quiz Listings</h3>
+  <div id="quiz-listings-container">
+  </div>
+</div>
 
 <div id="message-container">
 </div>
 
 <div id="main-container">
-  <div id="quizzes-display">
-  </div>
 </div>
 
-<script>
-  _.templateSettings = {
-    interpolate: /\{\{\=(.+?)\}\}/g,
-    evaluate: /\{\{(.+?)\}\}/g
-  };
 
-  $(document).ready(function() {
-    var controller = new Controllers.Quiz($("#quizzes-display"));
-    controller.showQuizzes();
-  });
-</script>
 
 <!-- -stuff- -->
 
 <script id="choices-question-template" type="text/template">
-  <div>
-    {{= question.question }}<br>
-    {{ question.choices.forEach(function(choice){ }}
+  {{= question.question }}<br>
+  {{ question.choices.forEach(function(choice){ }}
     <p class="submit-answer link" data-answer="{{= choice }}">{{= choice }}</p><br>
   {{ }); }}
-  </div>
 </script>
 
 <script id="blank-question-template" type="text/template">
@@ -58,28 +55,27 @@
   </form>
 </script>
 
-<script id="quizzes-template" type="text/template">
+<script id="quiz-listings-template" type="text/template">
 <ul>
-{{ console.log(quizzes);  }}
   {{ quizzes.forEach(function(quiz){ }}
     <li class="quiz link" data-quiz-id='{{= quiz.id }}'>
       {{= quiz.title }}
-    </li>   
+      <ul>
+        <li class="link new-question" data-quiz='{{= JSON.stringify(quiz) }}'>Create question</li>
+        <li class="link edit-quiz" data-quiz='{{= JSON.stringify(quiz) }}'>Edit quiz</li>
+      </ul>
+    </li>
+    
   {{ }); }}
 </ul>
 </script>
 
 <script id="final-score-template" type="text/template">
-  <div>
-    Correct: {{= correct }} out of {{= total }}
-    <p class="link new-quiz">Take another quiz</p>
-  </div>
+  Correct: {{= score.correct }} out of {{= score.total }}
 </script>
 
 <script id="question-result-template" type="text/template">
-  <div>
-    Interesting. Never seen someone be so {{= result }}
-  </div>
+  Interesting. Never seen someone be so {{= result }}
 </script>
 
 <script id="new-quiz-template" type="text/template">
