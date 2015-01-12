@@ -14,8 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require underscore
-//= require models
-//= require views
-//= require controllers
+//= require_tree ./models
+//= require_tree ./views
+//= require_tree ./controllers
 // 
 // Your Quizzy code should go here.

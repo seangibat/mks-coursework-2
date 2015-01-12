@@ -1,0 +1,8 @@
+.link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#main-container {
+  padding-left: 20px;
+}

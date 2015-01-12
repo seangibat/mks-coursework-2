@@ -1,20 +1,4 @@
 (function() {
-  var QuizController = function($container) {
-    this.$container = $container;
-  };
-
-  QuizController.prototype.showQuizzes = function() {
-    var _this = this;
-    Models.Quiz.fetch(function(quizzes) {
-      var quizView = new Views.Quiz(_this.$container, quizzes);
-    });
-  };
-
-  window.Controllers = window.Controllers || {};
-  window.Controllers.Quiz = QuizController;
-})();
-
-(function() {
   var QuestionsController = function($el, quizId) {
     this.$el = $el;
     this.quizId = quizId;
@@ -27,7 +11,6 @@
       _this.place = 0;
       var question = _this.questions[0];
       if (!question) {
-        console.log('hi')
         new Views.Message(_this.$el, "No questions for this quiz.");
       }
       else if (question.type === "multiple" || question.type == null || question.type == "boolean"){
@@ -54,7 +37,6 @@
 
   QuestionsController.prototype.submitAnswer = function(question, answer) {
     var _this = this;
-    console.log(_this);
     question.submitAnswer(answer, function(data){
       var result = (data.correct) ? "CORRECT" : "WRONG";
       new Views.QuestionResult(_this.$el, _this, result);
@@ -72,12 +54,19 @@
   };
 
   QuestionsController.prototype.showFinalScore = function() {
-    var right = this.questions.reduce(function(prev, question){ 
-      console.log(prev, question.correct); 
-      return (prev + ((question.correct) ? 1 : 0)); 
-    },0);
+    _this = this;
+    Models.Quiz.getScores(this.quizId, function(scores){
+      var right = _this.questions.reduce(function(prev, question){ 
+        return (prev + ((question.correct) ? 1 : 0)); 
+      },0);
+      scores = scores.sort(function(a,b){ 
+        if (a.score < b.score) return 1;
+        if (a.score > b.score) return -1;
+        return 0;
+      });
+      new Views.QuizResult(_this.$el, _this, right, _this.questions.length, scores);
+    });
 
-    new Views.QuizResult(this.$el, this, right, this.questions.length);
   };
 
   window.Controllers = window.Controllers || {};
