@@ -1,0 +1,159 @@
+body {
+  background-color: #EEE;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.top-bar {
+  background-color:white;
+  margin-bottom: 15px;
+  box-shadow: 2px 2px 5px #AAA;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.top-left, .top-right {
+  display: inline-block;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 15px;
+}
+.top-left {
+  text-align: left;
+  float: left;
+}
+.top-right {
+  text-align: right;
+}
+
+.item-add-button {
+  margin-top: 15px;
+}
+
+.item-div {
+  width:300px;
+  border: 1px solid #BBB;
+  border-radius: 5px;
+  float: left;
+  padding: 15px;
+  margin: 15px;
+  background-color: white;
+}
+
+.item-image {
+  max-width: 300px;
+}
+
+.item-table {
+  width: 100%;
+  font-size: 15px;
+}
+
+.item-table td {
+  text-align: left;
+  width: 50%;
+}
+
+.item-table th {
+  text-align: right;
+  width: 50%;
+}
+
+.clearfix {
+  overflow: auto;
+}
+
+h1, h3{
+  text-align: center;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 80px;
+  letter-spacing: -10px;
+  color: #05005C;
+}
+
+h2 {
+  color: #555;
+  font-size: 30px;
+  text-align: center;
+  letter-spacing: -2px;
+  font-style: italic;
+  color: #5F5C99;
+}
+
+h3 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+p, button {
+  font-size: 15px;
+}
+
+.cart-table {
+  width: 100%;
+  font-size: 15px;
+}
+
+.cart-table tr:nth-child(even){
+  background-color: #F9F9F9;
+}
+
+.cart-table td, .cart-table th {
+  padding: 15px;
+  font-size: 15px;
+}
+
+.cart-image-cell, .cart-name-cell, .cart-price-cell, .cart-number-cell, .cart-actions-cell {
+  text-align: center;
+}
+
+.cart-container {
+  border: 1px solid #BBB;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 15px;
+  background-color: white;
+}
+
+.cart-image {
+  max-width: 50px;
+}
+
+.checkout-button-container{
+  text-align: center;
+  margin-top: 15px;
+}
+
+.checkout-button, .checkout-input, .checkout-button-container {
+  font-size: 20px;
+}
+
+.cart-actions-cell span {
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cart-actions-cell span:nth-child(1){
+  margin-right: 15px;
+}
+
+.search-container {
+  text-align: center;
+  width: 100%;
+}
+
+.search-input {
+  margin: auto;
+  font-size: 15px;
+  padding: 7.5px;
+  margin: 7.5px;
+}

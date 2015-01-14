@@ -1,0 +1,16 @@
+<div class="app-container" ng-app="amazonApp">
+  <div class="top-bar" ng-controller="TopBarController">
+    <div class="top-left">
+      Welcome, friend, to the best products in the world.
+    </div>
+    <div class="top-right">
+      <a href="#/items">Products</a> |
+      <a href="#/cart">You have {{ cart.total }} items in your cart.</a>
+    </div>
+  </div>
+
+  <h1>The Nile</h1>
+  <h2>better than euphrates</h2>
+
+  <div ng-view></div>
+</div>
