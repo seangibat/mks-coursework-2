@@ -6,7 +6,7 @@ app.config(['$routeProvider',
         controller: 'ItemsController'
       }).
       when('/cart/', {
-        templateUrl: 'templates/cart.html',
+        templateUrl: '<%= asset_path("/templates/cart.html") %>',
         controller: 'CartController'
       }).
       otherwise({
