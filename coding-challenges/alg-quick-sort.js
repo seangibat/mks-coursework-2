@@ -4,44 +4,128 @@ function swap(array, left, right){
   arr[right] = temp;
 }
 
-function quicksort(array, left, right) {
-  // console.log("**quicksort: ", "left: ", left, "right: ", right);
-  if (left < right - 1) {
-    var pivot = left + right >> 1;
-    pivot = partition(array, left, right, pivot);
-    // quicksort(array, left, pivot);
-    // quicksort(array, pivot + 1, right);
+var arr = [10,3,6,1,5,4,1,4,2,8]
+
+var qSort = function(array, left, right){
+  if (left === undefined){
+    left = 0;
+    right = array.length-1;
   }
-  // console.log("qs: ", array);
+
+  if (left < right - 1){
+    var pivot = Math.ceil((right + left) / 2);
+    pivot = qPartition(array, left, right, pivot);
+    qSort(array, pivot, right);
+    qSort(array, left, --pivot);
+  }
   return array;
 }
 
-function partition(array, left, right, pivot) {
-  console.log("--begin: left: ", left, " right: ", right, " pivot: ", pivot, " pivotValue: ", array[pivot]);
-  console.log("--begn:", array);
+
+var qPartition = function(array, left, right, pivot){
+  console.log(array, left, right, pivot);
 
   var pivotValue = array[pivot];
-  swap(array, pivot, --right);
-  console.log("pswap", array);
+  swap(array, pivot, right);
 
-  for (var i = left; i < right; ++i) {
-    console.log("- i l ---------------------------")
-    console.log("s", i, left, array);
-    if (array[i] < pivotValue) {
-      swap(array, i, left++);
+  for (var i=left; i<right; i++){
+    if (array[i] < pivotValue){
+      swap(array, left++, i);
     }
-    console.log("f", i, left, array);
   }
 
   swap(array, left, right);
-  
-  console.log("--end:", array);
-  console.log("--end: left: ", left, " right: ", right, " pivot: ", pivot);
+
   return left;
 }
 
-var arr = [10,3,6,1,5,4,2,8]
+console.log("quicksort: " + qSort(arr))
 
-var m = quicksort(arr, 0, arr.length);
 
-console.log(m);
+
+
+
+
+var mergeSort = function(array){
+  if (array.length <= 1) return array;
+  var middle = Math.ceil(array.length/2);
+  var left = mergeSort(array.slice(0,middle));
+  var right = mergeSort(array.slice(middle,array.length));
+  var result = merge(left, right);
+  return result;
+}
+
+var merge = function(left, right){
+  var result = [], l=0, r=0;
+
+  while (l < left.length || r < right.length){
+    if (l < left.length && r < right.length){
+      if (left[l] < right[r])
+        result.push(left[l++]);
+      else
+        result.push(right[r++]);
+    }
+    else if (l < left.length)
+      result.push(left[l++]);
+    else if (r < right.length)
+      result.push(right[r++]);
+  }
+
+  return result;
+}
+
+console.log("merge sort: " + mergeSort(arr));
+
+
+
+
+
+
+var bubbleSort = function(array){
+  var swapp=true;
+  while (swapp){
+    swapp = false;
+    for (var i=1; i<array.length; i++){
+      if (array[i-1] > array[i]){
+        swap(array, i, i-1);
+        swapp = true;
+      }
+    }
+  }
+  return array;
+}
+
+console.log("bubble: " + bubbleSort(arr));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

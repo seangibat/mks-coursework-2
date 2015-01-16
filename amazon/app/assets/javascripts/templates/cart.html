@@ -1,17 +1,17 @@
-<div class="cart-container">
+<div class="item-table-container">
   <h3>Your Cart</h3>
-  <table class="cart-table">
+  <table class="item-list-table">
     <tr>
       <th></th><th>Item Name</th><th>Description</th><th>Number</th><th>Item Price</th><th>Total Item Price</th><th></th>
     </tr>
     <tr class="animate-repeat" ng-repeat="item in cart.cart">
-      <td class="cart-image-cell"><img ng-src="{{item.url}}" class="cart-image"></td>
-      <td class="cart-name-cell">{{item.name}}</td>
+      <td class="image-cell"><img ng-src="{{item.url}}" class="item-table-image"></td>
+      <td class="name-cell">{{item.name}}</td>
       <td>{{item.description}}</td>
-      <td class="cart-number-cell">{{cart.quantities[item.id]}}
-      <td class="cart-price-cell">${{item.price}}</td>
-      <td class="cart-price-cell">${{ cart.quantities[item.id] * item.price }}
-      <td class="cart-actions-cell">
+      <td class="number-cell">{{cart.quantities[item.id]}}
+      <td class="price-cell">${{item.price}}</td>
+      <td class="price-cell">${{ cart.quantities[item.id] * item.price }}</td>
+      <td class="actions-cell">
         <span ng-click="cart.addToCart(item)">+</span>
         <span ng-click="cart.removeFromCart(item)">-</span>
       </td>
@@ -24,7 +24,9 @@
     </tr>
   </table>
   <div class="checkout-button-container">
-    Customer Name: <input class="checkout-input" type="text" ng-model="name">
-    <button class="checkout-button" ng-click="cart.checkout(name); name=''">Order! Pleassse!</button>
+    <form ng-submit="cart.checkout(name); name=''">
+      Customer Name: <input class="checkout-input" type="text" ng-model="name">
+      <button class="checkout-button" name="">Order! Pleassse!</button>
+    </form>
   </div>
 </div>

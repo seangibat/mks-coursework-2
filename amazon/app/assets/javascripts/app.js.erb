@@ -1,0 +1,17 @@
+var app = angular.module('amazonApp', ['ngResource', 'ngRoute']);
+
+app.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/items', {
+        templateUrl: '<%= asset_path("templates/items.html") %>',
+        controller: 'ItemsController'
+      }).
+      when('/cart', {
+        templateUrl: '<%= asset_path("templates/cart.html") %>',
+        controller: 'CartController'
+      }).
+      otherwise({
+        redirectTo: '/items'
+      });
+  }]);

@@ -1,17 +1,28 @@
 
 <div class="search-container">
   <input class="search-input" type="text" ng-model="q" placeholder="Search!" />
+  <select class="order-select" ng-model="selectedOrder" ng-options="option for option in sortOptions">
+  </select>
+  <select class="order-select" ng-model="layout" ng-options="option for option in layoutOptions">
+  </select>
 </div>
 
-<div class="clearfix">
-  <div class="item-div animate-repeat" ng-repeat="item in items.items | filter:q" ng-hide="item.quantity === 0">
-    <h3>{{ item.name }}</h3>
-    <p><img class="item-image" ng-src="{{ item.url }}"></p>
-    <p>{{ item.description }}</p>
-    <table class="item-table">
-      <tr><th>Price:</th><td>${{item.price}}</td></tr>
-      <tr><th>Quantity:</th><td>{{item.quantity}}</td></tr>
-    </table>
-    <button class="item-add-button" ng-click="cart.addToCart(item)">Add to Cart</button>
-  </div>
+<div item-rectangle items="items" cart="cart" ng-show="layout === 'grid'"></div>
+
+<div class="item-table-container" ng-show="layout === 'list'">
+  <table class="item-list-table">
+    <tr>
+      <th></th><th>Item Name</th><th>Description</th><th>Quantity</th><th>Item Price</th><th></th>
+    </tr>
+    <tr class="animate-repeat" ng-repeat="item in items.items | filter:q | orderBy:selectedOrder">
+      <td class="image-cell"><img ng-src="{{item.url}}" class="item-table-image"></td>
+      <td class="name-cell">{{item.name}}</td>
+      <td>{{item.description}}</td>
+      <td class="number-cell">{{item.quantity}}
+      <td class="price-cell">${{item.price}}</td>
+      <td class="price-cell">
+        <button class="item-add-button" ng-click="cart.addToCart(item)">Add to Cart</button>
+      </td>
+    </tr>
+  </table>
 </div>

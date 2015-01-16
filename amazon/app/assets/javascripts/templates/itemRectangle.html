@@ -1,0 +1,12 @@
+<div class="clearfix">
+  <div class="item-div animate-repeat" ng-repeat="item in items.items | filter:q | orderBy:selectedOrder" ng-hide="item.quantity === 0">
+    <h3>{{ item.name }}</h3>
+    <p><img class="item-image" ng-src="{{ item.url }}"></p>
+    <p>{{ item.description }}</p>
+    <table class="item-table">
+      <tr><th>Price:</th><td>${{item.price}}</td></tr>
+      <tr><th>Quantity:</th><td>{{item.quantity}}</td></tr>
+    </table>
+    <button class="item-add-button" ng-click="cart.addToCart(item)">Add to Cart</button>
+  </div>
+</div>
