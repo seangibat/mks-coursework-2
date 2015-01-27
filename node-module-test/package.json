@@ -1,0 +1,15 @@
+{
+  "name": "Module-Test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fileWriter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^0.8.1",
+    "crypto-js": "^3.1.2-5"
+  }
+}

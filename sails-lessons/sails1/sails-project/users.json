@@ -1,0 +1,157 @@
+[
+  {
+    "index": 0,
+    "_id": "54b97993ecee20abfe48166d",
+    "name": "Kerri Hess",
+    "picture": "http://placehold.it/32x32",
+    "gender": "female",
+    "age": 28,
+    "greeting": "Hello, Kerri Hess! You have 8 unread messages.",
+    "email": "kerrihess@cosmosis.com",
+    "eyeColor": "green",
+    "phone": "+1 (999) 556-3308",
+    "favoriteFruit": "apple",
+    "balance": "$1,109.73",
+    "guid": "ee9a82c0-df07-439e-8a83-6bec20e1536d",
+    "friends": [
+      {
+        "id": 0,
+        "name": "Serena Mccray"
+      },
+      {
+        "id": 1,
+        "name": "Peters Galloway"
+      },
+      {
+        "id": 2,
+        "name": "Pope Flynn"
+      }
+    ],
+    "company": "COSMOSIS",
+    "isActive": true
+  },
+  {
+    "index": 1,
+    "_id": "54b979939fd8be7b41bee6c1",
+    "name": "Kaye Blevins",
+    "picture": "http://placehold.it/32x32",
+    "gender": "female",
+    "age": 40,
+    "greeting": "Hello, Kaye Blevins! You have 5 unread messages.",
+    "email": "kayeblevins@atomica.com",
+    "eyeColor": "brown",
+    "phone": "+1 (840) 462-3359",
+    "favoriteFruit": "apple",
+    "balance": "$3,743.08",
+    "guid": "93c412da-0663-4877-81e3-1353c3cf0b88",
+    "friends": [
+      {
+        "id": 0,
+        "name": "Amelia Bowers"
+      },
+      {
+        "id": 1,
+        "name": "Tamra Jenkins"
+      },
+      {
+        "id": 2,
+        "name": "Carmela Baird"
+      }
+    ],
+    "company": "ATOMICA",
+    "isActive": true
+  },
+  {
+    "index": 2,
+    "_id": "54b979935a72c05ada373429",
+    "name": "Eugenia Leblanc",
+    "picture": "http://placehold.it/32x32",
+    "gender": "female",
+    "age": 21,
+    "greeting": "Hello, Eugenia Leblanc! You have 2 unread messages.",
+    "email": "eugenialeblanc@capscreen.com",
+    "eyeColor": "brown",
+    "phone": "+1 (885) 595-3910",
+    "favoriteFruit": "strawberry",
+    "balance": "$2,166.17",
+    "guid": "8cf615ac-6b5f-48d7-92c2-07e50f4abffe",
+    "friends": [
+      {
+        "id": 0,
+        "name": "Tameka Kennedy"
+      },
+      {
+        "id": 1,
+        "name": "Beck Sanchez"
+      },
+      {
+        "id": 2,
+        "name": "Foreman Joseph"
+      }
+    ],
+    "company": "CAPSCREEN",
+    "isActive": false
+  },
+  {
+    "index": 3,
+    "_id": "54b97993a8aad06778b7858e",
+    "name": "Mejia Lawson",
+    "picture": "http://placehold.it/32x32",
+    "gender": "male",
+    "age": 32,
+    "greeting": "Hello, Mejia Lawson! You have 9 unread messages.",
+    "email": "mejialawson@comtext.com",
+    "eyeColor": "blue",
+    "phone": "+1 (989) 577-2201",
+    "favoriteFruit": "strawberry",
+    "balance": "$1,807.68",
+    "guid": "d404c0e1-371a-45b0-973b-1f5c46dbef7a",
+    "friends": [
+      {
+        "id": 0,
+        "name": "Dale Herman"
+      },
+      {
+        "id": 1,
+        "name": "Shaw Wright"
+      },
+      {
+        "id": 2,
+        "name": "Jordan Mcguire"
+      }
+    ],
+    "company": "COMTEXT",
+    "isActive": false
+  },
+  {
+    "index": 4,
+    "_id": "54b97993aae58f2b24fa3f1f",
+    "name": "Salazar Boyd",
+    "picture": "http://placehold.it/32x32",
+    "gender": "male",
+    "age": 32,
+    "greeting": "Hello, Salazar Boyd! You have 9 unread messages.",
+    "email": "salazarboyd@zolavo.com",
+    "eyeColor": "brown",
+    "phone": "+1 (883) 483-2232",
+    "favoriteFruit": "strawberry",
+    "balance": "$1,946.60",
+    "guid": "4e38ed6a-aa6e-4dc5-98d8-74aacdccc764",
+    "friends": [
+      {
+        "id": 0,
+        "name": "Boyer Richard"
+      },
+      {
+        "id": 1,
+        "name": "Willa Holman"
+      },
+      {
+        "id": 2,
+        "name": "Deann Wheeler"
+      }
+    ],
+    "company": "ZOLAVO",
+    "isActive": false
+  }
+]
